@@ -28,7 +28,7 @@ const streamingStatusLabel = document.getElementById('streaming-status-label');
 
 const presenterInputByService = {
   talks: {
-    source_url: 'https://d-id-public-bucket.s3.amazonaws.com/or-roman.jpg',
+    source_url:  "https://general-iamdave-mumbai.s3.ap-south-1.amazonaws.com/delet_this_folder/female_avatar_1mb.jpg",
   },
   clips: {
     presenter_id: 'rian-lZC6MmWfC1',
@@ -37,7 +37,7 @@ const presenterInputByService = {
 }
 
 const connectButton = document.getElementById('connect-button');
-connectButton.onclick = async () => {
+async function connectDID () {
   if (peerConnection && peerConnection.connectionState === 'connected') {
     return;
   }
@@ -78,10 +78,16 @@ connectButton.onclick = async () => {
       session_id: sessionId,
     }),
   });
+  // playIdleVideo();
+  // djQ(".dave-cb-icon").click(function () {
+  //   djQ("#content").removeClass('dave-avatar-container-hide');
+  //   // djQ("#content").addClass('');
+  // })
 };
+connectButton.onclick = connectDID()
 
 const startButton = document.getElementById('start-button');
-startButton.onclick = async () => {
+async function startDID(a_url) {
   // connectionState not supported in firefox
   if (peerConnection?.signalingState === 'stable' || peerConnection?.iceConnectionState === 'connected') {
     const playResponse = await fetchWithRetries(`${DID_API.url}/${DID_API.service}/streams/${streamId}`, {
@@ -93,7 +99,8 @@ startButton.onclick = async () => {
       body: JSON.stringify({
         script: {
           type: 'audio',
-          audio_url: 'https://d-id-public-bucket.s3.us-west-2.amazonaws.com/webrtc.mp3',
+          // audio_url: "https://synthesis-test.iamdave.ai/static/uploads/dave_expo/dave_website/fd9fa842ed3e38ea9a68396bdaf07b01-english/voice.wav",
+          audio_url: a_url,
         },
         ...(DID_API.service === 'clips' && {
           background: {
@@ -109,6 +116,7 @@ startButton.onclick = async () => {
   }
 };
 
+startButton.onclick = startDID();
 const destroyButton = document.getElementById('destroy-button');
 destroyButton.onclick = async () => {
   await fetch(`${DID_API.url}/${DID_API.service}/streams/${streamId}`, {
@@ -157,6 +165,7 @@ function onIceConnectionStateChange() {
   }
 }
 function onConnectionStateChange() {
+  peerConnection.connectionState === "failed" && connectDID();
   // not supported in firefox
   peerStatusLabel.innerText = peerConnection.connectionState;
   peerStatusLabel.className = 'peerConnectionState-' + peerConnection.connectionState;
@@ -248,8 +257,9 @@ function setVideoElement(stream) {
 
 function playIdleVideo() {
   videoElement.srcObject = undefined;
-  videoElement.src = DID_API.service == 'clips' ? 'rian_idle.mp4' : 'or_idle.mp4';
+  videoElement.src = DID_API.service == 'clips' ? 'female_idle.mp4' : 'female_idle.mp4';
   videoElement.loop = true;
+  videoElement & videoElement.play()
 }
 
 function stopAllStreams() {
@@ -300,3 +310,72 @@ async function fetchWithRetries(url, options, retries = 1) {
     }
   }
 }
+
+DAVE_SETTINGS.register_custom_callback(
+  "on_response",
+  function (a, customer_state, resp, params) {
+    // DAVE_SETTINGS.create_event("got_response");
+    // clearTimeout(DAVE_SETTINGS._received_sent_response);
+    // delete DAVE_SETTINGS._received_sent_response;
+    console.log("a",a);
+    console.log("customer_state",customer_state);
+    console.log("resp",resp);
+    console.log("params",params);
+    startDID(resp.response_channels.voice);
+  }
+);
+DAVE_SETTINGS.VOICE_ID = 'english-uk-female';
+// DAVE_SETTINGS.LANGUAGE = 
+// DAVE_SETTINGS.setAttribute({'data-language':'english','data-voice-id':'english-uk-female'});
+DAVE_SETTINGS.register_custom_callback("on_load_libraries", function () {
+  // djQ(".dave-cb-tt-sec").hide()
+  // djq(".dave-mic-contt").hide()
+
+  // // adding the loading gif 
+  // djq("<div id='loading-gif-container'></div>").prependTo('.dave-chatbox-cont')
+
+  // djQ(".dave-cb-avatar-contt").append(`
+  //         <img class= "mute_unmute" alt="mute" src="${DAVE_ENVIRONMENT.APP_PATH + '/maruti_accessories/arena/unmute.png'}">
+  //         <img class="stop-talking" alt="stop" src="${DAVE_ENVIRONMENT.APP_PATH + '/maruti_accessories/arena/stop-button.png'}">
+      
+  // `)
+  // djq('.mute_unmute').detach().prependTo('.dave-cb-avatar-contt')
+  // djq('.stop-talking').detach().prependTo('.dave-cb-avatar-contt')
+  // djQ(".close-min-max").detach().prependTo('.dave-cb-avatar-contt')
+  // djQ(".dave-cb-tt-cross").detach().prependTo('.close-min-max');
+  // // djQ(".dave-cb-tt-minmax").detach().prependTo(".close-min-max");
+  // djQ(".dave-cb-type-sec").append(`
+  //     <div class="dave-mic-contt">
+  //         <button class='dave-mic-button rec-start' id='start-recording'>
+  //             <img src="${DAVE_ENVIRONMENT.APP_PATH + '/maruti_accessories/arena/rec-start.png'}">
+  //         </button>
+  //         <button class='dave-mic-button rec-stop' id='stop-recording'>
+  //             <img src="${DAVE_ENVIRONMENT.APP_PATH + '/maruti_accessories/arena/rec-start.png'}">
+  //         </button>
+  //     </div>
+  // `)
+
+  // djQ('.dave-mic-contt').detach().prependTo(".dave-cb-type-sec")
+  // playIdleVideo();
+  // djQ(".dave-cb-icon").click(function () {
+  //   djQ("#content").removeClass('dave-avatar-container-hide');
+  //   // djQ("#content").addClass('');
+  // })
+  connectDID();
+  // djQ('.dave-cb-tt-cross img').click(() => {
+  //   djQ('#content').hide();
+  // })
+})
+
+$(document).ready(function() {
+  djQ('.dave-cb-tt-cross img').click(() => {
+    djQ('video').trigger('pause'); 
+    djQ("#content").addClass('dave-avatar-container-hide');
+  });
+  djQ(".dave-cb-icon").click(function () {
+    djQ("#content").removeClass('dave-avatar-container-hide');
+    playIdleVideo();
+    // djQ("#content").addClass('');
+  })
+});
+

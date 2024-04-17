@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>D-ID Streaming POC</title>
+    <title>Dave Streaming</title>
     <!-- added google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -140,11 +140,16 @@
         background-color: #fff;
       }
     </style>
+    <link rel="preconnect" href="//dmtsjlrqri08m.cloudfront.net">
+    <link rel="preconnect" href="//d17zqm5ossbwlx.cloudfront.net">
+    <link rel="stylesheet" type="text/css" href="//d17zqm5ossbwlx.cloudfront.net/assets/css/8.1/dave-style.min.css">
+    <link rel="stylesheet" type="text/css" href="//d17zqm5ossbwlx.cloudfront.net/assets/css/8.1/dave-help.min.css">
+    <link rel="stylesheet" href="./web.css">
   </head>
 
   <body>
     <!-- adde "id=content" -->
-    <div id="content">
+    <div id="content" class="dave-avatar-container-hide">
       <!-- added "id=video-wrapper" -->
       <div id="video-wrapper">
         <div>
@@ -173,5 +178,15 @@
     </div>
 
     <script type="module" src="./index.js"></script>
+    <script type="text/javascript" src="//d17zqm5ossbwlx.cloudfront.net/assets/js/8.1/dave-chatbot-help.js"></script>
+    <script type="text/javascript" src="//dmtsjlrqri08m.cloudfront.net/maruti_service/1.0/arena.js"></script>
+    <div class="dave-main-container" id="dave-settings" data-base-url="https://staging.iamdave.ai" data-conversation-id="deployment_hyperlocal" data-enterprise-id="maruti_core" data-signup-api-key="ZGF2ZSBleHBvMTU5NzEyNzc0NyA1Ng__" data-google-map-key="AIzaSyBtqxW4st_W6haXcMgho89TIeGNl9E6dKg"
+        data-dave-cbTitle='Dave Assistant' data-dave-botIcon='//dmtsjlrqri08m.cloudfront.net/maruti_service/arena/dave.svg' data-dave-userIcon='//dmtsjlrqri08m.cloudfront.net/maruti_service/arena/customer.svg' data-dave-cbIcon='//dmtsjlrqri08m.cloudfront.net/maruti_service/arena/dave_button.png'
+        data-dave-cross-img='//dmtsjlrqri08m.cloudfront.net/maruti_service/arena/cross.svg' data-dave-min-img='//dmtsjlrqri08m.cloudfront.net/maruti_service/arena/min.svg' data-dave-max-img='//dmtsjlrqri08m.cloudfront.net/maruti_service/arena/max.svg' data-dave-title-icon='//dmtsjlrqri08m.cloudfront.net/maruti_service/arena/dave_icon.png'
+        data-default-session-data='{"showroom_type": "Arena", "conversation_id": "deployment_hyperlocal", "deployment_scenario": "common", "location_dict": "{agent_info.ip}","browser": "{agent_info.browser}","os": "{agent_info.os}","device_type": "{agent_info.device}"}'
+        data-default-user-data='{"person_type": "visitor", "source": "web-chatbot", "entry_showroom_type": "Arena", "application": "service", "conversation_id": "deployment_service"}' data-default-interaction-data='{"deployment_scenario": "service_arena", "conversation_id": "deployment_service", "application": "service", "source": "web-chatbot", "showroom_type": "Arena"}'
+        data-login-attrs='["mobile_number","email", "mspin"]' data-interaction-origin='interaction_origin' data-session-origin='interaction_origin' data-event-model='session_log' data-cb-height-desktop='420px' data-cb-width-desktop='450px' data-cb-height-mobile='calc( 100vh - 80px )'
+        data-cb-width-mobile='100%' data-cb-minLockHeight='300px'>
+    </div>
   </body>
 </html>
